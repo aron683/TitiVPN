@@ -1,0 +1,14 @@
+app = "titivpn"
+primary_region = "jnb"
+
+[env]
+  PASSWORD = "Tii071new123"
+  WG_HOST = "41.145.208.117"
+
+[http_service]
+  internal_port = 51821
+  force_https = true
+  auto_start_machines = true
+  auto_stop_machines = true
+  min_machines_running = 1
+  processes = ["app"]
