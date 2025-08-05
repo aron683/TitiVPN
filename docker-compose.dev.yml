@@ -9,7 +9,7 @@ services:
       - "51820:51820/udp"         # WireGuard port (VPN)
       - "51821:51821/tcp"         # Web UI port
     environment:
-      - PASSWORD=YourStrongPasswordHere     # Set your login password
+      - PASSWORD=Tii071new123     # Set your login password
       - WG_HOST=41.145.208.117              # ✅ Your public IP
     volumes:
       - ./wg-easy-data:/etc/wireguard       # Data storage
