@@ -8,7 +8,7 @@ Your own fast & private VPN service — powered by WireGuard and Fly.io.
 ## 🌟 Features
 
 - ✅ One-click WireGuard server deployment
-- 🌐 Web-based admin panel (create, edit, delete clients)
+- 🌐 Web-based admin panel (create,edit, delete clients)
 - 📱 QR code & .conf download support
 - 📊 Live connection stats (Tx/Rx per client)
 - 🔒 Secured with a custom login password
