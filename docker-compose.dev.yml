@@ -1,10 +1,14 @@
-version: "3.8"
-services:
-  wg-easy:
-    image: wg-easy
-    command: npm run serve
-    volumes:
-      - ./src/:/app/
-    environment: 
-      # - PASSWORD=p
-      - WG_HOST=192.168.1.233
+app = "titivpn"
+primary_region = "jnb"
+
+[env]
+  # 👇 These are now set securely using `fly secrets set`
+  # PASSWORD and WG_HOST are NOT visible here!
+
+[http_service]
+  internal_port = 51821
+  force_https = true
+  auto_start_machines = true
+  auto_stop_machines = true
+  min_machines_running = 1
+  processes = ["app"]
