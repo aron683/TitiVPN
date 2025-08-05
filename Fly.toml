@@ -2,8 +2,8 @@ app = "titivpn"
 primary_region = "jnb"
 
 [env]
-  # 👇 These are now set securely using `fly secrets set`
-  # PASSWORD and WG_HOST are NOT visible here!
+  # These will be injected securely using `flyctl secrets set`
+  # PASSWORD and WG_HOST are stored safely
 
 [http_service]
   internal_port = 51821
