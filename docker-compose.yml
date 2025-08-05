@@ -4,26 +4,25 @@ services:
   wg-easy:
     image: ghcr.io/wg-easy/wg-easy
     container_name: wg-easy
-
     environment:
-      # === Required ===
-      - WG_HOST=titivpn.fly.dev         # Replace with your fly.io hostname
-      - PASSWORD=yoursecurepassword     # Set your admin password
-      - WG_DEFAULT_ADDRESS=10.10.0.x    # Auto assigns 10.10.0.2, .3, etc.
-      - WG_DEFAULT_DNS=1.1.1.1,8.8.8.8  # DNS for clients
+      # These are securely set via Fly.io secrets
+      - WG_DEFAULT_DNS=1.1.1.1,8.8.8.8
+      - WG_DEFAULT_ADDRESS=10.10.0.x
 
-      # === NAT: Masquerade outgoing traffic ===
-      - WG_POST_UP=iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE; \
-        ip6tables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-      - WG_POST_DOWN=iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE; \
-        ip6tables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+      # Auto detect network interface for NAT (✅ fly.io compatible)
+      - WG_POST_UP=IFACE=$(ip route get 8.8.8.8 | awk '{print $5; exit}'); \
+          iptables -t nat -A POSTROUTING -o $IFACE -j MASQUERADE; \
+          ip6tables -t nat -A POSTROUTING -o $IFACE -j MASQUERADE
+      - WG_POST_DOWN=IFACE=$(ip route get 8.8.8.8 | awk '{print $5; exit}'); \
+          iptables -t nat -D POSTROUTING -o $IFACE -j MASQUERADE; \
+          ip6tables -t nat -D POSTROUTING -o $IFACE -j MASQUERADE
 
     volumes:
-      - ./wireguard:/etc/wireguard
+      - ./wg-easy-data:/etc/wireguard
 
     ports:
-      - "51820:51820/udp"
-      - "51821:51821/tcp"
+      - "51820:51820/udp" # WireGuard port
+      - "51821:51821/tcp" # Web UI
 
     restart: unless-stopped
 
