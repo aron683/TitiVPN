@@ -1,5 +1,5 @@
 app = "titivpn"
-primary_region = "jnb"
+primary_region = "ams"
 
 [env]
   # These will be injected securely using `flyctl secrets set`
