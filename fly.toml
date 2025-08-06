@@ -1,4 +1,4 @@
-app = "titivpn"
+app = "titivpn-eu"
 primary_region = "ams"
 
 [env]
