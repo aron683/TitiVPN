@@ -1,23 +1,25 @@
-# fly.toml app configuration file generated for titivpn-eu on 2025-08-06T18:44:33Z
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
+app = "titivpn-eu"
+primary_region = "ams"
 
-app = 'titivpn-eu'
-primary_region = 'ams'
-
-[build]
+[env]
+# Add your WireGuard environment variables here if needed
 
 [http_service]
-  internal_port = 51820
-  force_https = true
-  auto_stop_machines = 'stop'
-  auto_start_machines = true
-  min_machines_running = 0
-  processes = ['app']
+internal_port = 51821
+force_https = true
+auto_start_machines = true
+auto_stop_machines = true       # Sleep when idle
+min_machines_running = 1        # Always keep at least 1 running
+processes = ["app"]
 
-[[vm]]
-  memory = '1gb'
-  cpu_kind = 'shared'
-  cpus = 1
-  memory_mb = 1024
+[[services]]
+internal_port = 51821
+protocol = "udp"
+
+  [[services.ports]]
+  port = 51821
+  handlers = ["udp"]
+
+[[metrics]]
+port = 9091
+path = "/metrics"
